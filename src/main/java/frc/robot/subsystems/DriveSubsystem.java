@@ -18,34 +18,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
-  // Create EasySwerveModules
-  private final EasySwerveModule m_frontLeft = new EasySwerveModule(
+  // Create MAXSwerveModules
+  private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
     DriveConstants.kFrontLeftDrivingCanId,
     DriveConstants.kFrontLeftTurningCanId,
-    DriveConstants.kFrontLeftChassisAngularOffset,
-    DriveConstants.kFrontLeftDrivingMotorOnBottom,
-    DriveConstants.kFrontLeftTurningMotorOnBottom);
+    DriveConstants.kFrontLeftChassisAngularOffset);
 
-private final EasySwerveModule m_frontRight = new EasySwerveModule(
+private final MAXSwerveModule m_frontRight = new MAXSwerveModule(
     DriveConstants.kFrontRightDrivingCanId,
     DriveConstants.kFrontRightTurningCanId,
-    DriveConstants.kFrontRightChassisAngularOffset,
-    DriveConstants.kFrontRightDrivingMotorOnBottom,
-    DriveConstants.kFrontRightTurningMotorOnBottom);
+    DriveConstants.kFrontRightChassisAngularOffset);
 
-private final EasySwerveModule m_rearLeft = new EasySwerveModule(
+private final MAXSwerveModule m_rearLeft = new MAXSwerveModule(
     DriveConstants.kRearLeftDrivingCanId,
     DriveConstants.kRearLeftTurningCanId,
-    DriveConstants.kBackLeftChassisAngularOffset,
-    DriveConstants.kRearLeftDrivingMotorOnBottom,
-    DriveConstants.kRearLeftTurningMotorOnBottom);
+    DriveConstants.kBackLeftChassisAngularOffset);
 
-private final EasySwerveModule m_rearRight = new EasySwerveModule(
+private final MAXSwerveModule m_rearRight = new MAXSwerveModule(
     DriveConstants.kRearRightDrivingCanId,
     DriveConstants.kRearRightTurningCanId,
-    DriveConstants.kBackRightChassisAngularOffset,
-    DriveConstants.kRearRightDrivingMotorOnBottom,
-    DriveConstants.kRearRightTurningMotorOnBottom);
+    DriveConstants.kBackRightChassisAngularOffset);
 
   // The gyro sensor
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();

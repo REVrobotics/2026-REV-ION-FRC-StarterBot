@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.revrobotics.spark.FeedbackSensor;
+import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -20,14 +21,15 @@ import frc.robot.Constants.ModuleConstants;
  * constants are needed, to reduce verbosity.
  */
 public final class Configs {
-  private static final  double nominalVoltage = 12.0;
+  private static final double nominalVoltage = 12.0;
 
-  public static final class EasySwerveModule {
+  public static final class MAXSwerveModule {
     public static final SparkMaxConfig drivingConfig = new SparkMaxConfig();
     public static final SparkMaxConfig turningConfig = new SparkMaxConfig();
+
     static {
       // Use module constants to calculate conversion factors and feed forward gain.
-      double drivingFactor = ModuleConstants.kWheelDiameterMeters * Math.PI 
+      double drivingFactor = ModuleConstants.kWheelDiameterMeters * Math.PI
         / ModuleConstants.kDrivingMotorReduction;
       double turningFactor = 2 * Math.PI;
       double drivingVelocityFeedForward = nominalVoltage / ModuleConstants.kDriveWheelFreeSpeedRps;
@@ -35,10 +37,12 @@ public final class Configs {
       drivingConfig
         .idleMode(IdleMode.kBrake)
         .smartCurrentLimit(60);
+
       drivingConfig
         .encoder
           .positionConversionFactor(drivingFactor) // meters
           .velocityConversionFactor(drivingFactor / 60.0); // meters per second
+
       drivingConfig
         .closedLoop
           .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
@@ -51,16 +55,17 @@ public final class Configs {
       turningConfig
         .idleMode(IdleMode.kBrake)
         .smartCurrentLimit(60);
+
       turningConfig
         .absoluteEncoder
-          // Do not invert the turning encoder, since the output shaft rotates in the same
-          // direction as the steering motor in the EasySwerve Module.
-          .inverted(false)
+          // Invert the turning encoder, since the output shaft rotates in the opposite
+          // direction of the steering motor in the MAXSwerve Module.
+          .inverted(true)
           .positionConversionFactor(turningFactor) // radians
-          .velocityConversionFactor(turningFactor / 60.0)  // radians per second
-          // These apply to REV Through Bore Encoder V2 (for V1, set them both to 1.0):
-          .startPulseUs(3.88443797)
-          .endPulseUs(1.94221899);
+          .velocityConversionFactor(turningFactor / 60.0) // radians per second
+          // Apply the REV Through Bore Encoder V2 preset (use REV_ThroughBoreEncoder for V1):
+          .apply(AbsoluteEncoderConfig.Presets.REV_ThroughBoreEncoderV2);
+
       turningConfig
         .closedLoop
           .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)

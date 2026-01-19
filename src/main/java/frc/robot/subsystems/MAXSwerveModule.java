@@ -12,7 +12,6 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
@@ -20,7 +19,7 @@ import com.revrobotics.ResetMode;
 
 import frc.robot.Configs;
 
-public class EasySwerveModule {
+public class MAXSwerveModule {
   private final SparkMax m_drivingSpark;
   private final SparkMax m_turningSpark;
 
@@ -34,13 +33,11 @@ public class EasySwerveModule {
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
 
   /**
-   * Constructs an EasySwerveModule and configures the driving and turning motor,
+   * Constructs a MAXSwerveModule and configures the driving and turning motor,
    * encoder, and PID controller. This configuration is specific to the REV
-   * EasySwerve Module built with NEOs, SPARK MAXs, and a Through Bore
-   * Encoder V2.
+   * MAXSwerve Module built with SPARK MAXs and a Through Bore Encoder V2.
    */
-  public EasySwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset,
-      boolean drivingMotorOnBottom, boolean turningMotorOnBottom) {
+  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
     m_drivingSpark = new SparkMax(drivingCANId, MotorType.kBrushless);
     m_turningSpark = new SparkMax(turningCANId, MotorType.kBrushless);
 
@@ -53,13 +50,10 @@ public class EasySwerveModule {
     // Apply the respective configurations to the SPARKS. Reset parameters before
     // applying the configuration to bring the SPARK to a known good state. Persist
     // the settings to the SPARK to avoid losing them on a power cycle.
-    SparkMaxConfig drivingConfig = Configs.EasySwerveModule.drivingConfig;
-    drivingConfig.inverted(drivingMotorOnBottom);
-    m_drivingSpark.configure(drivingConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-    SparkMaxConfig turningConfig = Configs.EasySwerveModule.turningConfig;
-    turningConfig.inverted(!turningMotorOnBottom);
-    m_turningSpark.configure(turningConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_drivingSpark.configure(Configs.MAXSwerveModule.drivingConfig, ResetMode.kResetSafeParameters,
+        PersistMode.kPersistParameters);
+    m_turningSpark.configure(Configs.MAXSwerveModule.turningConfig, ResetMode.kResetSafeParameters,
+        PersistMode.kPersistParameters);
 
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
