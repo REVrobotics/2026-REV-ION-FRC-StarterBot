@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Degree;
+import static edu.wpi.first.units.Units.Degrees;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Angle;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -21,11 +25,20 @@ public final class Constants {
 
   public static final class IntakeSubsystemConstants {
     public static final int kIntakeMotorCanId = 2;    // SPARK Flex CAN ID
+    public static final int kIntakePivotMotorCanId = 3;
     public static final int kConveyorMotorCanId = 4;  // SPARK Flex CAN ID
+
+    public static final double kPivotGearRatio = 1.0 / 18.0;
 
     public static final class IntakeSetpoints {
       public static final double kIntake = 0.6;
       public static final double kExtake = -0.6;
+    }
+
+    public static final class PivotSetpoints {
+      public static final double kStow = 110.0;
+      public static final double kIntake = 0.0;
+      public static final double kExtake = 0.0;
     }
 
     public static final class ConveyorSetpoints {

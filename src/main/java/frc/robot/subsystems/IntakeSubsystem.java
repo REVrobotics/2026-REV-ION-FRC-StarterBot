@@ -6,7 +6,9 @@ package frc.robot.subsystems;
 
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,11 +18,17 @@ import frc.robot.Configs;
 import frc.robot.Constants.IntakeSubsystemConstants;
 import frc.robot.Constants.IntakeSubsystemConstants.ConveyorSetpoints;
 import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
+import frc.robot.Constants.IntakeSubsystemConstants.PivotSetpoints;
 
 public class IntakeSubsystem extends SubsystemBase {
   // Initialize intake SPARK. We will use open loop control for this.
   private SparkFlex intakeMotor =
       new SparkFlex(IntakeSubsystemConstants.kIntakeMotorCanId, MotorType.kBrushless);
+
+  private SparkFlex intakePivotMotor =
+      new SparkFlex(IntakeSubsystemConstants.kIntakePivotMotorCanId, MotorType.kBrushless);
+  private SparkClosedLoopController intakePivotController =
+      intakePivotMotor.getClosedLoopController();
 
   // Initialize conveyor SPARK. We will use open loop control for this.
   private SparkFlex conveyorMotor =
@@ -40,6 +48,11 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     intakeMotor.configure(
         Configs.IntakeSubsystem.intakeConfig,
+        ResetMode.kResetSafeParameters,
+        PersistMode.kPersistParameters);
+
+    intakePivotMotor.configure(
+        Configs.IntakeSubsystem.intakePivotConfig,
         ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
 
@@ -69,9 +82,11 @@ public class IntakeSubsystem extends SubsystemBase {
     return this.startEnd(
         () -> {
           this.setIntakePower(IntakeSetpoints.kIntake);
+          this.intakePivotController.setSetpoint(PivotSetpoints.kIntake, ControlType.kPosition);
           this.setConveyorPower(ConveyorSetpoints.kIntake);
         }, () -> {
           this.setIntakePower(0.0);
+          this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
           this.setConveyorPower(0.0);
         }).withName("Intaking");
   }
@@ -84,11 +99,20 @@ public class IntakeSubsystem extends SubsystemBase {
     return this.startEnd(
         () -> {
           this.setIntakePower(IntakeSetpoints.kExtake);
+          this.intakePivotController.setSetpoint(PivotSetpoints.kExtake, ControlType.kPosition);
           this.setConveyorPower(ConveyorSetpoints.kExtake);
         }, () -> {
           this.setIntakePower(0.0);
+          this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
           this.setConveyorPower(0.0);
         }).withName("Extaking");
+  }
+
+  public Command stowCommand() {
+    return this.run(() -> {
+        this.setIntakePower(0);
+        this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
+    });
   }
 
   @Override

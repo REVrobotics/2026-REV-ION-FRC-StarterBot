@@ -4,11 +4,14 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Degrees;
+
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import frc.robot.Constants.IntakeSubsystemConstants;
 import frc.robot.Constants.ModuleConstants;
 
 /**
@@ -78,6 +81,8 @@ public final class Configs {
 
   public static final class IntakeSubsystem {
     public static final SparkFlexConfig intakeConfig = new SparkFlexConfig();
+    public static final SparkFlexConfig intakePivotConfig = new SparkFlexConfig();
+
     public static final SparkFlexConfig conveyorConfig = new SparkFlexConfig();
 
     static {
@@ -87,6 +92,20 @@ public final class Configs {
         .idleMode(IdleMode.kCoast)
         .openLoopRampRate(0.5)
         .smartCurrentLimit(40);
+
+      intakePivotConfig
+        .inverted(false)
+        .idleMode(IdleMode.kBrake)
+        .smartCurrentLimit(30);
+      intakePivotConfig.encoder
+        .positionConversionFactor(IntakeSubsystemConstants.kPivotGearRatio * 360.0) // Degrees with 0 as the horizonatal
+        .velocityConversionFactor((IntakeSubsystemConstants.kPivotGearRatio * 360.0) / 60); // Degrees per second
+      intakePivotConfig.closedLoop
+        .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+        .p(0.1) // TODO(jan): tune
+        .feedForward
+          .kCosRatio(1.0 / 360.0)
+          .kCos(0); // TODO(jan): tune
 
       // Configure basic settings of the conveyor motor
       conveyorConfig
