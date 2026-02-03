@@ -8,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -99,6 +100,11 @@ public class RobotContainer {
     m_driverController
         .y()
         .toggleOnTrue(m_shooter.runShooterCommand().alongWith(m_intake.runIntakeCommand()));
+
+    m_driverController
+        .leftBumper()
+        .onTrue(Commands.runOnce(() -> m_robotDrive.setGovernor(false)))
+        .onFalse(Commands.runOnce(() -> m_robotDrive.setGovernor(true)));
   }
 
   /**
