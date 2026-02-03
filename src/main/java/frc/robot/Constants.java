@@ -4,14 +4,10 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.Degree;
-import static edu.wpi.first.units.Units.Degrees;
-
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.Angle;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -24,9 +20,9 @@ import edu.wpi.first.units.measure.Angle;
 public final class Constants {
 
   public static final class IntakeSubsystemConstants {
-    public static final int kIntakeMotorCanId = 2;    // SPARK Flex CAN ID
+    public static final int kIntakeMotorCanId = 2; // SPARK Flex CAN ID
     public static final int kIntakePivotMotorCanId = 3;
-    public static final int kConveyorMotorCanId = 4;  // SPARK Flex CAN ID
+    public static final int kConveyorMotorCanId = 4; // SPARK Flex CAN ID
 
     public static final double kPivotGearRatio = 1.0 / 18.0;
 
@@ -48,9 +44,9 @@ public final class Constants {
   }
 
   public static final class ShooterSubsystemConstants {
-    public static final int kFeederMotorCanId = 5;    // SPARK Flex CAN ID
-    public static final int kFlywheelMotorCanId = 6;  // SPARK Flex CAN ID (Right)
-    public static final int kFlywheelFollowerMotorCanId = 7;  // SPARK Flex CAN ID (Left)
+    public static final int kFeederMotorCanId = 5; // SPARK Flex CAN ID
+    public static final int kFlywheelMotorCanId = 6; // SPARK Flex CAN ID (Right)
+    public static final int kFlywheelFollowerMotorCanId = 7; // SPARK Flex CAN ID (Left)
 
     public static final class FeederSetpoints {
       public static final double kFeed = 0.95;
@@ -83,12 +79,17 @@ public final class Constants {
 
     // Angular offsets of the modules relative to the chassis in radians
     private static final double kEasySwerveAngularOffsetCompensation = Math.PI / 4;
-    public static final double kFrontLeftChassisAngularOffset = (-Math.PI / 2) + kEasySwerveAngularOffsetCompensation;
-    public static final double kFrontRightChassisAngularOffset = 0 + kEasySwerveAngularOffsetCompensation;
-    public static final double kBackLeftChassisAngularOffset = Math.PI + kEasySwerveAngularOffsetCompensation;
-    public static final double kBackRightChassisAngularOffset = (Math.PI / 2) + kEasySwerveAngularOffsetCompensation;
+    public static final double kFrontLeftChassisAngularOffset =
+        (-Math.PI / 2) + kEasySwerveAngularOffsetCompensation;
+    public static final double kFrontRightChassisAngularOffset =
+        0 + kEasySwerveAngularOffsetCompensation;
+    public static final double kBackLeftChassisAngularOffset =
+        Math.PI + kEasySwerveAngularOffsetCompensation;
+    public static final double kBackRightChassisAngularOffset =
+        (Math.PI / 2) + kEasySwerveAngularOffsetCompensation;
 
-    // The EasySwerve module allows installation of the motors either on top or bottom of the module.
+    // The EasySwerve module allows installation of the motors either on top or bottom of the
+    // module.
     // These constants configure the location of the motors. The default configuration is with both
     // motors on the bottom of the module.
     public static final boolean kFrontLeftDrivingMotorOnBottom = true;
@@ -117,10 +118,12 @@ public final class Constants {
 
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
-    public static final double kVortexKv = 565;   // rpm/V
+    public static final double kVortexKv = 565; // rpm/V
   }
 
-  public static final class ModuleConstants {    // The EasySwerve module can only be configured with one pinion gears: 12T.
+  public static final
+  class ModuleConstants { // The EasySwerve module can only be configured with one pinion gears:
+    // 12T.
     public static final int kDrivingMotorPinionTeeth = 12;
 
     // Calculations required for driving motor conversion factors and feed forward
@@ -132,10 +135,11 @@ public final class Constants {
     public static final double kDrivingWheelBevelGearTeeth = 45.0;
     public static final double kDrivingWheelFirstStageSpurGearTeeth = 30.0;
     public static final double kDrivingMotorBevelPinionTeeth = 15.0;
-    public static final double kDrivingMotorReduction = (kDrivingWheelBevelGearTeeth * kDrivingWheelFirstStageSpurGearTeeth)
-        / (kDrivingMotorPinionTeeth * kDrivingMotorBevelPinionTeeth);
-    public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
-        / kDrivingMotorReduction;
+    public static final double kDrivingMotorReduction =
+        (kDrivingWheelBevelGearTeeth * kDrivingWheelFirstStageSpurGearTeeth)
+            / (kDrivingMotorPinionTeeth * kDrivingMotorBevelPinionTeeth);
+    public static final double kDriveWheelFreeSpeedRps =
+        (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters) / kDrivingMotorReduction;
   }
 
   public static final class OIConstants {
@@ -159,5 +163,4 @@ public final class Constants {
         new TrapezoidProfile.Constraints(
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
-
 }

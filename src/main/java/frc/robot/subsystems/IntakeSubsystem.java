@@ -6,11 +6,10 @@ package frc.robot.subsystems;
 
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
-import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -57,9 +56,9 @@ public class IntakeSubsystem extends SubsystemBase {
         PersistMode.kPersistParameters);
 
     conveyorMotor.configure(
-      Configs.IntakeSubsystem.conveyorConfig,
-      ResetMode.kResetSafeParameters,
-      PersistMode.kPersistParameters);
+        Configs.IntakeSubsystem.conveyorConfig,
+        ResetMode.kResetSafeParameters,
+        PersistMode.kPersistParameters);
 
     System.out.println("---> IntakeSubsystem initialized");
   }
@@ -75,51 +74,56 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   /**
-   * Command to run the intake and conveyor motors. When the command is interrupted, e.g. the button is released,
-   * the motors will stop.
+   * Command to run the intake and conveyor motors. When the command is interrupted, e.g. the button
+   * is released, the motors will stop.
    */
   public Command runIntakeCommand() {
     return this.startEnd(
-        () -> {
-          this.setIntakePower(IntakeSetpoints.kIntake);
-          this.intakePivotController.setSetpoint(PivotSetpoints.kIntake, ControlType.kPosition);
-          this.setConveyorPower(ConveyorSetpoints.kIntake);
-        }, () -> {
-          this.setIntakePower(0.0);
-          this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
-          this.setConveyorPower(0.0);
-        }).withName("Intaking");
+            () -> {
+              this.setIntakePower(IntakeSetpoints.kIntake);
+              this.intakePivotController.setSetpoint(PivotSetpoints.kIntake, ControlType.kPosition);
+              this.setConveyorPower(ConveyorSetpoints.kIntake);
+            },
+            () -> {
+              this.setIntakePower(0.0);
+              this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
+              this.setConveyorPower(0.0);
+            })
+        .withName("Intaking");
   }
 
   /**
-   * Command to reverse the intake motor and coveyor motors. When the command is interrupted, e.g. the button is
-   * released, the motors will stop.
+   * Command to reverse the intake motor and coveyor motors. When the command is interrupted, e.g.
+   * the button is released, the motors will stop.
    */
   public Command runExtakeCommand() {
     return this.startEnd(
-        () -> {
-          this.setIntakePower(IntakeSetpoints.kExtake);
-          this.intakePivotController.setSetpoint(PivotSetpoints.kExtake, ControlType.kPosition);
-          this.setConveyorPower(ConveyorSetpoints.kExtake);
-        }, () -> {
-          this.setIntakePower(0.0);
-          this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
-          this.setConveyorPower(0.0);
-        }).withName("Extaking");
+            () -> {
+              this.setIntakePower(IntakeSetpoints.kExtake);
+              this.intakePivotController.setSetpoint(PivotSetpoints.kExtake, ControlType.kPosition);
+              this.setConveyorPower(ConveyorSetpoints.kExtake);
+            },
+            () -> {
+              this.setIntakePower(0.0);
+              this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
+              this.setConveyorPower(0.0);
+            })
+        .withName("Extaking");
   }
 
   public Command stowCommand() {
-    return this.run(() -> {
-        this.setIntakePower(0);
-        this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
-    });
+    return this.run(
+        () -> {
+          this.setIntakePower(0);
+          this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
+        });
   }
 
   @Override
   public void periodic() {
     // Display subsystem values
     SmartDashboard.putNumber("Intake | Intake | Applied Output", intakeMotor.getAppliedOutput());
-    SmartDashboard.putNumber("Intake | Conveyor | Applied Output", conveyorMotor.getAppliedOutput());
+    SmartDashboard.putNumber(
+        "Intake | Conveyor | Applied Output", conveyorMotor.getAppliedOutput());
   }
-
 }

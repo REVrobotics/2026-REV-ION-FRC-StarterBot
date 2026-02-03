@@ -19,33 +19,37 @@ import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create EasySwerveModules
-  private final EasySwerveModule m_frontLeft = new EasySwerveModule(
-    DriveConstants.kFrontLeftDrivingCanId,
-    DriveConstants.kFrontLeftTurningCanId,
-    DriveConstants.kFrontLeftChassisAngularOffset,
-    DriveConstants.kFrontLeftDrivingMotorOnBottom,
-    DriveConstants.kFrontLeftTurningMotorOnBottom);
+  private final EasySwerveModule m_frontLeft =
+      new EasySwerveModule(
+          DriveConstants.kFrontLeftDrivingCanId,
+          DriveConstants.kFrontLeftTurningCanId,
+          DriveConstants.kFrontLeftChassisAngularOffset,
+          DriveConstants.kFrontLeftDrivingMotorOnBottom,
+          DriveConstants.kFrontLeftTurningMotorOnBottom);
 
-private final EasySwerveModule m_frontRight = new EasySwerveModule(
-    DriveConstants.kFrontRightDrivingCanId,
-    DriveConstants.kFrontRightTurningCanId,
-    DriveConstants.kFrontRightChassisAngularOffset,
-    DriveConstants.kFrontRightDrivingMotorOnBottom,
-    DriveConstants.kFrontRightTurningMotorOnBottom);
+  private final EasySwerveModule m_frontRight =
+      new EasySwerveModule(
+          DriveConstants.kFrontRightDrivingCanId,
+          DriveConstants.kFrontRightTurningCanId,
+          DriveConstants.kFrontRightChassisAngularOffset,
+          DriveConstants.kFrontRightDrivingMotorOnBottom,
+          DriveConstants.kFrontRightTurningMotorOnBottom);
 
-private final EasySwerveModule m_rearLeft = new EasySwerveModule(
-    DriveConstants.kRearLeftDrivingCanId,
-    DriveConstants.kRearLeftTurningCanId,
-    DriveConstants.kBackLeftChassisAngularOffset,
-    DriveConstants.kRearLeftDrivingMotorOnBottom,
-    DriveConstants.kRearLeftTurningMotorOnBottom);
+  private final EasySwerveModule m_rearLeft =
+      new EasySwerveModule(
+          DriveConstants.kRearLeftDrivingCanId,
+          DriveConstants.kRearLeftTurningCanId,
+          DriveConstants.kBackLeftChassisAngularOffset,
+          DriveConstants.kRearLeftDrivingMotorOnBottom,
+          DriveConstants.kRearLeftTurningMotorOnBottom);
 
-private final EasySwerveModule m_rearRight = new EasySwerveModule(
-    DriveConstants.kRearRightDrivingCanId,
-    DriveConstants.kRearRightTurningCanId,
-    DriveConstants.kBackRightChassisAngularOffset,
-    DriveConstants.kRearRightDrivingMotorOnBottom,
-    DriveConstants.kRearRightTurningMotorOnBottom);
+  private final EasySwerveModule m_rearRight =
+      new EasySwerveModule(
+          DriveConstants.kRearRightDrivingCanId,
+          DriveConstants.kRearRightTurningCanId,
+          DriveConstants.kBackRightChassisAngularOffset,
+          DriveConstants.kRearRightDrivingMotorOnBottom,
+          DriveConstants.kRearRightTurningMotorOnBottom);
 
   // The gyro sensor
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();

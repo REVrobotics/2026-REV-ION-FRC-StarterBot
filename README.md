@@ -75,7 +75,7 @@ Individual mechanisms can also be controlled via SmartDashboard:
 - The Intake and Shooter subsystems contain Commands and status
   - In a subsystem, only a single command may run at a time
   - Pressing the `Start` button starts the Command and is replaced by a `Cancel` button, which stops the command
- 
+
 #### `IntakeSubsystem`
 - **`Intake`** : Runs the Intake and Conveyor into the robot
 - **`Extake`** : Runs the Intake and Conveyor out of the robot

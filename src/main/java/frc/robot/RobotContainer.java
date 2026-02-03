@@ -11,12 +11,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.Autos;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.Autos;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -44,16 +43,17 @@ public class RobotContainer {
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
-            () ->
-                m_robotDrive.drive(
-                    -MathUtil.applyDeadband(
-                        m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                    -MathUtil.applyDeadband(
-                        m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-                    -MathUtil.applyDeadband(
-                        m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                    true),
-            m_robotDrive).withName("Robot Drive Default"));
+                () ->
+                    m_robotDrive.drive(
+                        -MathUtil.applyDeadband(
+                            m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                        -MathUtil.applyDeadband(
+                            m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                        -MathUtil.applyDeadband(
+                            m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                        true),
+                m_robotDrive)
+            .withName("Robot Drive Default"));
 
     SmartDashboard.putData(m_intake);
     SmartDashboard.putData(m_shooter);
@@ -63,8 +63,10 @@ public class RobotContainer {
     SmartDashboard.putData("Intake", m_intake.runIntakeCommand().withName("Intake - Intaking"));
     SmartDashboard.putData("Extake", m_intake.runExtakeCommand().withName("Intake - Extaking"));
 
-    SmartDashboard.putData("Feeder", m_shooter.runFeederCommand().withName("Shooter - Feeding and Shooting"));
-    SmartDashboard.putData("Flywheel", m_shooter.runFlywheelCommand().withName("Shooter - Spinning up Flywheel"));
+    SmartDashboard.putData(
+        "Feeder", m_shooter.runFeederCommand().withName("Shooter - Feeding and Shooting"));
+    SmartDashboard.putData(
+        "Flywheel", m_shooter.runFlywheelCommand().withName("Shooter - Spinning up Flywheel"));
   }
 
   /**
@@ -85,16 +87,18 @@ public class RobotContainer {
 
     // Right Trigger -> Run fuel intake in reverse
     m_driverController
-      .rightTrigger(OIConstants.kTriggerButtonThreshold)
-      .whileTrue(m_intake.runIntakeCommand());
+        .rightTrigger(OIConstants.kTriggerButtonThreshold)
+        .whileTrue(m_intake.runIntakeCommand());
 
     // Left Trigger -> Run fuel intake in reverse
     m_driverController
-      .leftTrigger(OIConstants.kTriggerButtonThreshold)
-      .whileTrue(m_intake.runExtakeCommand());
+        .leftTrigger(OIConstants.kTriggerButtonThreshold)
+        .whileTrue(m_intake.runExtakeCommand());
 
     // Y Button -> Run intake and run the shooter flywheel and feeder
-    m_driverController.y().toggleOnTrue(m_shooter.runShooterCommand().alongWith(m_intake.runIntakeCommand()));
+    m_driverController
+        .y()
+        .toggleOnTrue(m_shooter.runShooterCommand().alongWith(m_intake.runIntakeCommand()));
   }
 
   /**
