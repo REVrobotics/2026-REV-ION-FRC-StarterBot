@@ -24,15 +24,15 @@ public final class Constants {
     public static final int kIntakePivotMotorCanId = 3;
     public static final int kConveyorMotorCanId = 4; // SPARK Flex CAN ID
 
-    public static final double kPivotGearRatio = 1.0 / 18.0;
+    public static final double kPivotGearRatio = 1.0 / 36.0;
 
     public static final class IntakeSetpoints {
-      public static final double kIntake = 0.6;
-      public static final double kExtake = -0.6;
+      public static final double kIntake = 0.5;
+      public static final double kExtake = -0.5;
     }
 
     public static final class PivotSetpoints {
-      public static final double kStow = 110.0;
+      public static final double kStow = 90.0;
       public static final double kIntake = 0.0;
       public static final double kExtake = 0.0;
     }

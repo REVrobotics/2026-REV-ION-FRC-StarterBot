@@ -87,7 +87,7 @@ public final class Configs {
           .openLoopRampRate(0.5)
           .smartCurrentLimit(40);
 
-      intakePivotConfig.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(30);
+      intakePivotConfig.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40);
       intakePivotConfig
           .encoder
           .positionConversionFactor(
@@ -97,10 +97,10 @@ public final class Configs {
       intakePivotConfig
           .closedLoop
           .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-          .p(0.1) // TODO(jan): tune
+          .p(0.01)
           .feedForward
           .kCosRatio(1.0 / 360.0)
-          .kCos(0); // TODO(jan): tune
+          .kCos(0.00277777777);
 
       // Configure basic settings of the conveyor motor
       conveyorConfig
