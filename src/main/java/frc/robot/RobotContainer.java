@@ -101,6 +101,8 @@ public class RobotContainer {
         .y()
         .toggleOnTrue(m_shooter.runShooterCommand().alongWith(m_intake.runIntakeCommand()));
 
+    m_driverController.x().onTrue(m_intake.togglePivotCommand());
+
     m_driverController
         .leftBumper()
         .onTrue(Commands.runOnce(() -> m_robotDrive.setGovernor(false)))

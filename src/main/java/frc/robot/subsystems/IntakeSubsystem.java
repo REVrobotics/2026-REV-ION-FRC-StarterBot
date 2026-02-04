@@ -33,6 +33,8 @@ public class IntakeSubsystem extends SubsystemBase {
   private SparkFlex conveyorMotor =
       new SparkFlex(IntakeSubsystemConstants.kConveyorMotorCanId, MotorType.kBrushless);
 
+  private boolean isPivotDeployed = true;
+
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
     /*
@@ -81,12 +83,10 @@ public class IntakeSubsystem extends SubsystemBase {
     return this.startEnd(
             () -> {
               this.setIntakePower(IntakeSetpoints.kIntake);
-              this.intakePivotController.setSetpoint(PivotSetpoints.kIntake, ControlType.kPosition);
               this.setConveyorPower(ConveyorSetpoints.kIntake);
             },
             () -> {
               this.setIntakePower(0.0);
-              this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
               this.setConveyorPower(0.0);
             })
         .withName("Intaking");
@@ -100,22 +100,25 @@ public class IntakeSubsystem extends SubsystemBase {
     return this.startEnd(
             () -> {
               this.setIntakePower(IntakeSetpoints.kExtake);
-              this.intakePivotController.setSetpoint(PivotSetpoints.kExtake, ControlType.kPosition);
               this.setConveyorPower(ConveyorSetpoints.kExtake);
             },
             () -> {
               this.setIntakePower(0.0);
-              this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
               this.setConveyorPower(0.0);
             })
         .withName("Extaking");
   }
 
-  public Command stowCommand() {
-    return this.run(
+  public Command togglePivotCommand() {
+    return this.runOnce(
         () -> {
-          this.setIntakePower(0);
-          this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
+          if (isPivotDeployed) {
+            this.intakePivotController.setSetpoint(PivotSetpoints.kIntake, ControlType.kPosition);
+            isPivotDeployed = false;
+          } else {
+            this.intakePivotController.setSetpoint(PivotSetpoints.kStow, ControlType.kPosition);
+            isPivotDeployed = true;
+          }
         });
   }
 
